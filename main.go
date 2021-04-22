@@ -70,23 +70,23 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 		if strings.EqualFold(message.Text, "36") {
 			bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(" Bye bye!")).Do(); err != nil {
 			}
-		if strings.EqualFold(message.Text, "34":{
+		if strings.EqualFold(message.Text, "34"{
 			messages = append(messages,)
 				bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(profile[2] + "你已經是菜市場的會員囉，不用再申請加入啦")).Do()
 				bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("動動腰起床了, 生意上門喔!")).Do()}
 
-		case message.Text=="a7":
+		case message.Text=="a7"
 			if len(profile) > 0
 				bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(profile[2] + "你已經是菜市場的會員囉，不用再申請加入啦")).Do()
 				
 		if strings.Contains(message.Text,"32") 
 			if strings.Contains(message.Text,"31") {bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("剛睡醒呀")).Do()}
 
-		case "30": bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("動動腰起床了, 生意上門喔!")).Do()
+		case "30" bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("動動腰起床了, 生意上門喔!")).Do()
 
-		case linebot.EventTypeMessage:{
+		case linebot.EventTypeMessage{
 			switch message := event.Message.(type) {
-			case (message.Text,"w2"):
+			case (message.Text,"w2")
 				linebot.NewTextMessage("クーポンがありません\nキャンペーンに応募してゲットしよう!!!"),
 			}
 		}
