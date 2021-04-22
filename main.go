@@ -70,17 +70,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 		if strings.EqualFold(message.Text, "36") {
 			bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(" Bye bye!")).Do(); err != nil 
 			}
-			
-		case message.Text=="a7"
-			if len(profile) > 0
-				bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(profile[2] + "你已經是菜市場的會員囉，不用再申請加入啦")).Do()
-				
-		case linebot.EventTypeMessage{
-			switch message := event.Message.(type) {
-			case (message.Text,"w2")
-				linebot.NewTextMessage("クーポンがありません\nキャンペーンに応募してゲットしよう!!!"),
-			}
-		}
 
 		case linebot.EventTypeMessage:
 			switch message := event.Message.(type) {
