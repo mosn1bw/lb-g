@@ -67,10 +67,8 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				}
 			}
 
-		case linebot.EventTypeMessage:
-			switch message := event.Message.(type) 
-			case "33":{
-				messages = append(messages,{
+		case "33":{
+			messages = append(messages,{
 				linebot.NewTextMessage("クーポンをゲットしよう!!!"),}
 				linebot.NewTextMessage(os.Getenv("WEB_CAMPAIGN_URL")),}
 		    	)
