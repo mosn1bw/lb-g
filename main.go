@@ -148,7 +148,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func sendUserProfile(user linebot.UserProfileResponse, event *linebot.Event) {
-	retString := fmt.Sprintf("سلام دوست خوبم٪s ، شناسه شما٪s ، زبان شما٪s و وضعیت شما:٪s است\n", user.DisplayName, user.UserID, user.Language, user.StatusMessage)
+	retString := fmt.Sprintf("سلام دوست خوبم٪s ، شناسه شما٪s ،زبان شما٪s و وضعیت شما:٪s است\n", user.DisplayName, user.UserID, user.Language, user.StatusMessage)
 	if _, err := bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(retString), linebot.NewImageMessage(user.PictureURL, user.PictureURL)).Do(); err != nil {
 		//Reply fail.
 		log.Print(err)
