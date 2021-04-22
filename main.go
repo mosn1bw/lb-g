@@ -71,14 +71,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 			bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(" Bye bye!")).Do(); err != nil 
 			}
 			
-		case "30" bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("動動腰起床了, 生意上門喔!")).Do()
-		if strings.Contains(message.Text,"32") 
-			if strings.Contains(message.Text,"31") {bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("剛睡醒呀")).Do()}
-
-		if strings.EqualFold(message.Text, "34"{
-			bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(profile[2] + "你已經是菜市場的會員囉，不用再申請加入啦")).Do()
-			bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("動動腰起床了, 生意上門喔!")).Do()}
-
 		case message.Text=="a7"
 			if len(profile) > 0
 				bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(profile[2] + "你已經是菜市場的會員囉，不用再申請加入啦")).Do()
