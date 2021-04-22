@@ -54,14 +54,14 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 			if event.Source.GroupID != "" {
 				target = event.Source.GroupID
 				if profile, err := bot.GetGroupMemberProfile(event.Source.GroupID, event.Source.UserID).Do(); err == nil {
-					if _, err = bot.PushMessage(target, linebot.NewTextMessage(profile.DisplayName+" 不要害羞回收訊息唷!, 打個 show 來顯示資料吧！")).Do(); err != nil {
+					if _, err = bot.PushMessage(target, linebot.NewTextMessage(profile.DisplayName+"Don't be shy to recall messages, برای نمایش اطلاعات ، /me را تایپ کنید!")).Do(); err != nil {
 						log.Print(err)
 					}
 				}
 			} else {
 				target = event.Source.RoomID
 				if profile, err := bot.GetRoomMemberProfile(event.Source.RoomID, event.Source.UserID).Do(); err == nil {
-					if _, err = bot.PushMessage(target, linebot.NewTextMessage(profile.DisplayName+" 不要害羞回收訊息唷!, 打個 show 來顯示資料吧！")).Do(); err != nil {
+					if _, err = bot.PushMessage(target, linebot.NewTextMessage(profile.DisplayName+" برای نمایش اطلاعات ، /me را تایپ کنید!")).Do(); err != nil {
 						log.Print(err)
 					}
 				}
@@ -71,15 +71,53 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
 				switch {
+				case "33":{
+					messages = append(messages,{
+					linebot.NewTextMessage("クーポンをゲットしよう!!!"),
+					linebot.NewTextMessage(os.Getenv("WEB_CAMPAIGN_URL")),
+		    	)
+	    	}
+
+		case "34":{
+			messages = append(messages,{
+				bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(profile[2] + "你已經是菜市場的會員囉，不用再申請加入啦")).Do()
+				bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("動動腰起床了, 生意上門喔!")).Do()
+			)
+		}
+
+		case message.Text=="a7":
+			if len(profile) > 0{{
+				bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(profile[2] + "你已經是菜市場的會員囉，不用再申請加入啦")).Do()
+			)
+		}
+				
+		if strings.Contains(message.Text,"32") {
+			if strings.Contains(message.Text,"31") {bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("剛睡醒呀")).Do()}
+			}			
+
+
+		case "30": bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("動動腰起床了, 生意上門喔!")).Do()
+
+		case linebot.EventTypeMessage:{
+			switch message := event.Message.(type) {
+			case (message.Text,"w2"):
+				linebot.NewTextMessage("クーポンがありません\nキャンペーンに応募してゲットしよう!!!"),
+				}
+		}
+		
+		case linebot.EventTypeMessage:
+			switch message := event.Message.(type) {
+			case *linebot.TextMessage:
+				switch {
 				case event.Source.GroupID != "":
 					//In the group
-					if strings.EqualFold(message.Text, "bye") {
-						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("Bye bye!")).Do(); err != nil {
+					if strings.EqualFold(message.Text, "/bye") {
+						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("خداحافظ  دوستان !")).Do(); err != nil {
 							log.Print(err)
 						}
 						bot.LeaveGroup(event.Source.GroupID).Do()
 					} else {
-						if strings.EqualFold(message.Text, "show") {
+						if strings.EqualFold(message.Text, "/me") {
 							//Response with get member profile
 							if profile, err := bot.GetGroupMemberProfile(event.Source.GroupID, event.Source.UserID).Do(); err == nil {
 								sendUserProfile(*profile, event)
@@ -95,7 +133,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						}
 						bot.LeaveRoom(event.Source.RoomID).Do()
 					} else {
-						if strings.EqualFold(message.Text, "show") {
+						if strings.EqualFold(message.Text, "/me") {
 							//Response with get member profile
 							if profile, err := bot.GetRoomMemberProfile(event.Source.RoomID, event.Source.UserID).Do(); err == nil {
 								sendUserProfile(*profile, event)
@@ -103,7 +141,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						}
 					}
 				default:
-					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(" 你好 :"+message.Text+" OK!")).Do(); err != nil {
+					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(" سلام :"+message.Text+" OK!")).Do(); err != nil {
 						log.Print(err)
 					}
 				}
@@ -113,7 +151,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 			if event.Source.GroupID != "" {
 				if groupRes, err := bot.GetGroupSummary(event.Source.GroupID).Do(); err == nil {
 					if goupMemberResult, err := bot.GetGroupMemberCount(event.Source.GroupID).Do(); err == nil {
-						retString := fmt.Sprintf("感謝讓我加入這個群組，這個群組名稱是:%s, 總共有:%d 人\n", groupRes.GroupName, goupMemberResult.Count)
+						retString := fmt.Sprintf("متشکرم که اجازه دادید به این گروه بپیوندم ، نام این گروه:٪s است ، در کل:٪d نفر وجود دارد\n", groupRes.GroupName, goupMemberResult.Count)
 						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(retString), linebot.NewImageMessage(groupRes.PictureURL, groupRes.PictureURL)).Do(); err != nil {
 							//Reply fail.
 							log.Print(err)
@@ -129,7 +167,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 			} else if event.Source.RoomID != "" {
 				// If join into a Room
 				if goupMemberResult, err := bot.GetRoomMemberCount(event.Source.RoomID).Do(); err == nil {
-					retString := fmt.Sprintf("感謝讓我加入這個聊天室，這個聊天室名總共有:%d 人\n", goupMemberResult.Count)
+					retString := fmt.Sprintf("از اینکه به من اجازه دادید به این چت روم بپیوندم متشکرم ، در مجموع٪d نفر در این چت روم هستند\n", goupMemberResult.Count)
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(retString)).Do(); err != nil {
 						//Reply fail.
 						log.Print(err)
@@ -144,7 +182,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func sendUserProfile(user linebot.UserProfileResponse, event *linebot.Event) {
-	retString := fmt.Sprintf("使用者 %s 您好， 你的 ID 是 %s, 使用語言是 %s, 狀態為: %s\n", user.DisplayName, user.UserID, user.Language, user.StatusMessage)
+	retString := fmt.Sprintf("سلام دوست خوبم٪s ، شناسه شما٪s ، زبان شما٪s و وضعیت شما:٪s است\n", user.DisplayName, user.UserID, user.Language, user.StatusMessage)
 	if _, err := bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(retString), linebot.NewImageMessage(user.PictureURL, user.PictureURL)).Do(); err != nil {
 		//Reply fail.
 		log.Print(err)
