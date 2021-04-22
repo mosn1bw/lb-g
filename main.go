@@ -70,10 +70,9 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 		if strings.EqualFold(message.Text, "36") {
 			bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(" Bye bye!")).Do(); err != nil {
 			}
-		case "33":{
+		if strings.EqualFold(message.Text, "33") {
 			messages = append(messages,{
 				linebot.NewTextMessage("クーポンをゲットしよう!!!"),}
-				linebot.NewTextMessage(os.Getenv("WEB_CAMPAIGN_URL")),}
 		    	)
 	    	}
 
