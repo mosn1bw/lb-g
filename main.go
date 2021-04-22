@@ -111,7 +111,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						
 		if strings.EqualFold(message.Text, "36") {
 			switch message := event.Message.(type) {
-		        	if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(" Bye bye!")).Do(); err != nil {
+		        	if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(" Bye bye!")).Do(); err != nil },
 				log.Print(err)
 			}
 			
