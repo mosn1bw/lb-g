@@ -67,10 +67,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				}
 			}
 
-		if strings.EqualFold(message.Text, "36") {
-			bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(" Bye bye!")).Do(); err != nil 
-			}
-
 		case linebot.EventTypeMessage:
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
@@ -112,6 +108,13 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					}
 				}
 			}
+			
+		if strings.EqualFold(message.Text, "36") {
+			switch message := event.Message.(type) {
+			bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(" Bye bye!")).Do(); err != nil 
+			}
+		}
+			
 		case linebot.EventTypeJoin:
 			// If join into a Group
 			if event.Source.GroupID != "" {
