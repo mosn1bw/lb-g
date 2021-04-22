@@ -69,32 +69,24 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 
 		case linebot.EventTypeMessage:
 			switch message := event.Message.(type) 
-			case *linebot.TextMessage:
-				switch {
-				case "33":{
-					messages = append(messages,{
-					linebot.NewTextMessage("クーポンをゲットしよう!!!"),}
-					linebot.NewTextMessage(os.Getenv("WEB_CAMPAIGN_URL")),}
+			case "33":{
+				messages = append(messages,{
+				linebot.NewTextMessage("クーポンをゲットしよう!!!"),}
+				linebot.NewTextMessage(os.Getenv("WEB_CAMPAIGN_URL")),}
 		    	)
 	    	}
 
 		case "34":{
-			messages = append(messages,{
+			messages = append(messages,)
 				bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(profile[2] + "你已經是菜市場的會員囉，不用再申請加入啦")).Do()
 				bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("動動腰起床了, 生意上門喔!")).Do()}
-			)
-		}
 
 		case message.Text=="a7":
-			if len(profile) > 0{{
+			if len(profile) > 0
 				bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(profile[2] + "你已經是菜市場的會員囉，不用再申請加入啦")).Do()
-			}
-		}
 				
-		if strings.Contains(message.Text,"32") {
+		if strings.Contains(message.Text,"32") 
 			if strings.Contains(message.Text,"31") {bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("剛睡醒呀")).Do()}
-			}			
-
 
 		case "30": bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("動動腰起床了, 生意上門喔!")).Do()
 
