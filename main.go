@@ -70,9 +70,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 		if strings.EqualFold(message.Text, "36") {
 			bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(" Bye bye!")).Do(); err != nil {
 			}
-		if strings.EqualFold(message.Text, "33") {
-			linebot.NewTextMessage("クーポンをゲットしよう!!!"),}
-
 		if strings.EqualFold(message.Text, "34":{
 			messages = append(messages,)
 				bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(profile[2] + "你已經是菜市場的會員囉，不用再申請加入啦")).Do()
