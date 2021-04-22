@@ -68,8 +68,9 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 			}
 
 		if strings.EqualFold(message.Text, "36") {
-			bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(" Bye bye!")).Do(); err != nil {
+			bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(" Bye bye!")).Do(); err != nil 
 			}
+			
 		case "30" bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("動動腰起床了, 生意上門喔!")).Do()
 		if strings.Contains(message.Text,"32") 
 			if strings.Contains(message.Text,"31") {bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("剛睡醒呀")).Do()}
