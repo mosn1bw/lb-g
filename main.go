@@ -73,6 +73,20 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				switch {
 				case event.Source.GroupID != "":
 					//In the group
+					if strings.EqualFold(message.Text, "salam") {
+						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("salam dear")).Do(); err != nil {
+							log.Print(err)
+						}
+					}
+				}
+			}
+			
+		case linebot.EventTypeMessage:
+			switch message := event.Message.(type) {
+			case *linebot.TextMessage:
+				switch {
+				case event.Source.GroupID != "":
+					//In the group
 					if strings.EqualFold(message.Text, "/bye") {
 						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("خداحافظ  دوستان !")).Do(); err != nil {
 							log.Print(err)
@@ -114,7 +128,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 			if event.Source.GroupID != "" {
 				if groupRes, err := bot.GetGroupSummary(event.Source.GroupID).Do(); err == nil {
 					if goupMemberResult, err := bot.GetGroupMemberCount(event.Source.GroupID).Do(); err == nil {
-						retString := fmt.Sprintf("متشکرم که اجازه دادید به این گروه بپیوندم ، نام این گروه:٪s است ، در کل:٪d نفر وجود دارد\n", groupRes.GroupName, goupMemberResult.Count)
+						retString := fmt.Sprintf("سلام دوستان\n\n متشکرم که اجازه\n\n دادید به این گروه بپیوندم\n\n", groupRes.GroupName, goupMemberResult.Count)
 						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(retString), linebot.NewImageMessage(groupRes.PictureURL, groupRes.PictureURL)).Do(); err != nil {
 							//Reply fail.
 							log.Print(err)
@@ -130,7 +144,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 			} else if event.Source.RoomID != "" {
 				// If join into a Room
 				if goupMemberResult, err := bot.GetRoomMemberCount(event.Source.RoomID).Do(); err == nil {
-					retString := fmt.Sprintf("از اینکه به من اجازه دادید به این چت روم بپیوندم متشکرم ، در مجموع٪d نفر در این چت روم هستند\n", goupMemberResult.Count)
+					retString := fmt.Sprintf("سلام دوستان\n\n متشکرم که اجازه\n\n دادید به این گروه بپیوندم\n\n", goupMemberResult.Count)
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(retString)).Do(); err != nil {
 						//Reply fail.
 						log.Print(err)
@@ -145,7 +159,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func sendUserProfile(user linebot.UserProfileResponse, event *linebot.Event) {
-	retString := fmt.Sprintf("سلام دوست خوبم٪s ، شناسه شما٪s ،زبان شما٪s و وضعیت شما:٪s است\n", user.DisplayName, user.UserID, user.Language, user.StatusMessage)
+	retString := fmt.Sprintf("\nسلام دوست خوبم\n", user.DisplayName, user.UserID, user.Language, user.StatusMessage)
 	if _, err := bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(retString), linebot.NewImageMessage(user.PictureURL, user.PictureURL)).Do(); err != nil {
 		//Reply fail.
 		log.Print(err)
