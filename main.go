@@ -73,20 +73,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				switch {
 				case event.Source.GroupID != "":
 					//In the group
-					if strings.EqualFold(message.Text, "salam") {
-						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("salam dear")).Do(); err != nil {
-							log.Print(err)
-						}
-					}
-				}
-			}
-			
-		case linebot.EventTypeMessage:
-			switch message := event.Message.(type) {
-			case *linebot.TextMessage:
-				switch {
-				case event.Source.GroupID != "":
-					//In the group
 					if strings.EqualFold(message.Text, "/bye") {
 						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("خداحافظ  دوستان !")).Do(); err != nil {
 							log.Print(err)
