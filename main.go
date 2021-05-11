@@ -82,60 +82,7 @@ func NewEaBot(channelSecret, channelToken, appBaseURL, googleJsonKeyBase64, spre
 		subscriptionService: subscriptionService,
 	}, nil
 }
-
-func (app *EaBot) handleText(message *linebot.TextMessage, replyToken string, source *linebot.EventSource) error {
-	switch message.Text {
-		case "profile":
-	    	if source.UserID != "" {
-		    	profile, err := app.bot.GetProfile(source.UserID).Do()
-		    	if err != nil {
-		    		return app.replyText(replyToken, err.Error())
-		    	}
-		    	if _, err := app.bot.ReplyMessage(
-			    	replyToken,
-			    	linebot.NewTextMessage("Display name: "+profile.DisplayName),
-			    	linebot.NewTextMessage("Status message: "+profile.StatusMessage),
-			    	linebot.NewTextMessage("Group:"+source.GroupID),
-		    	).Do(); err != nil {
-		    		return err
-		    	}
-		    } else {
-		    	return app.replyText(replyToken, "Bot can't use profile API without user ID")
-		    }
-		case "confirm":
-		    template := linebot.NewConfirmTemplate(
-		    	"Do it?",
-		    	linebot.NewMessageAction("Yes", "Yes!"),
-		    	linebot.NewMessageAction("No", "No!"),
-		    )
-	    	if _, err := app.bot.ReplyMessage(
-	    		replyToken,
-	    		linebot.NewTemplateMessage("Confirm alt text", template),
-	    	).Do(); err != nil {
-	    		return err
-	    	}
-
-		case "approve":
-	    	profile, err := app.bot.GetProfile(source.UserID).Do()
-	    	if err != nil {
-	    		log.Print( err.Error())
-	    	}
-	    	encodeUserId := utils.EncodeUserId(source.UserID)
-	    	text := "\"" + profile.DisplayName + "\" request the subscription, Approve?"
-	    	approvedText := "Approve subscriber \"" + profile.DisplayName + "\" (" + encodeUserId + ")"
-	    	rejectedText := "Reject subscriber \"" + profile.DisplayName + "\" (" + encodeUserId + ")"
-	    	template := linebot.NewConfirmTemplate(
-	    		text,
-	    		linebot.NewMessageAction("Approve", approvedText),
-	    		linebot.NewMessageAction("Reject", rejectedText),
-	    	)
-	    	if _, err := app.bot.ReplyMessage(
-	    		replyToken,
-	    		linebot.NewTemplateMessage(text, template),
-	    	).Do(); err != nil {
-	    		return err
-	    	}
-		
+	
 	for _, event := range events {
 		switch event.Type {
 		case linebot.EventTypeUnsend:
