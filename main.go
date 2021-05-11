@@ -33,7 +33,7 @@ func main() {
 	addr := fmt.Sprintf(":%s", port)
 	http.ListenAndServe(addr, nil)
 }
-		
+
 func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	events, err := bot.ParseRequest(r)
 
@@ -45,7 +45,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
-	
+
 	for _, event := range events {
 		switch event.Type {
 		case linebot.EventTypeUnsend:
@@ -79,7 +79,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 						}
 						bot.LeaveGroup(event.Source.GroupID).Do()
 					} else {
-						if strings.EqualFold(message.Text, "me") {
+						if strings.EqualFold(message.Text, "/me") {
 							//Response with get member profile
 							if profile, err := bot.GetGroupMemberProfile(event.Source.GroupID, event.Source.UserID).Do(); err == nil {
 								sendUserProfile(*profile, event)
@@ -89,13 +89,13 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 
 				case event.Source.RoomID != "":
 					//In the room
-					if strings.EqualFold(message.Text, "bye") {
+					if strings.EqualFold(message.Text, "/bye") {
 						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(" Bye bye!")).Do(); err != nil {
 							log.Print(err)
 						}
 						bot.LeaveRoom(event.Source.RoomID).Do()
 					} else {
-						if strings.EqualFold(message.Text, "me") {
+						if strings.EqualFold(message.Text, "/me") {
 							//Response with get member profile
 							if profile, err := bot.GetRoomMemberProfile(event.Source.RoomID, event.Source.UserID).Do(); err == nil {
 								sendUserProfile(*profile, event)
@@ -108,7 +108,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					}
 				}
 			}
-	
+				 
 		case linebot.EventTypeJoin:
 			// If join into a Group
 			if event.Source.GroupID != "" {
