@@ -45,43 +45,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
-
-// EaBot function
-func NewEaBot(channelSecret, channelToken, appBaseURL, googleJsonKeyBase64, spreadsheetId string) (*EaBot, error) {
-
-	fmt.Println(fmt.Sprintf("channelSecret: %s", channelSecret))
-	fmt.Println(fmt.Sprintf("channelToken: %s", channelToken))
-	fmt.Println(fmt.Sprintf("appBaseURL: %s", appBaseURL))
-	fmt.Println(fmt.Sprintf("spreadsheetId: %s", spreadsheetId))
-
-	apiEndpointBase := os.Getenv("ENDPOINT_BASE")
-	if apiEndpointBase == "" {
-		apiEndpointBase = linebot.APIEndpointBase
-	}
-
-	bot, err := linebot.New(
-		channelSecret,
-		channelToken,
-		linebot.WithEndpointBase(apiEndpointBase), // Usually you omit this.
-	)
-	if err != nil {
-		return nil, err
-	}
-	downloadDir := filepath.Join(filepath.Dir(os.Args[0]), "line-bot")
-	_, err = os.Stat(downloadDir)
-	if err != nil {
-		if err := os.Mkdir(downloadDir, 0777); err != nil {
-			return nil, err
-		}
-	}
-	subscriptionService := subscription.NewSubscriptionService(googleJsonKeyBase64, spreadsheetId)
-	return &EaBot{
-		bot:        bot,
-		appBaseURL: appBaseURL,
-		downloadDir: downloadDir,
-		subscriptionService: subscriptionService,
-	}, nil
-}
 	
 	for _, event := range events {
 		switch event.Type {
