@@ -34,6 +34,18 @@ func main() {
 	http.ListenAndServe(addr, nil)
 }
 		
+func callbackHandler(w http.ResponseWriter, r *http.Request) {
+	events, err := bot.ParseRequest(r)
+
+	if err != nil {
+		if err == linebot.ErrInvalidSignature {
+			w.WriteHeader(400)
+		} else {
+			w.WriteHeader(500)
+		}
+		return
+	}
+
 // EaBot function
 func NewEaBot(channelSecret, channelToken, appBaseURL, googleJsonKeyBase64, spreadsheetId string) (*EaBot, error) {
 
@@ -124,18 +136,6 @@ func (app *EaBot) handleText(message *linebot.TextMessage, replyToken string, so
 	    		return err
 	    	}
 		
-func callbackHandler(w http.ResponseWriter, r *http.Request) {
-	events, err := bot.ParseRequest(r)
-
-	if err != nil {
-		if err == linebot.ErrInvalidSignature {
-			w.WriteHeader(400)
-		} else {
-			w.WriteHeader(500)
-		}
-		return
-	}
-
 	for _, event := range events {
 		switch event.Type {
 		case linebot.EventTypeUnsend:
